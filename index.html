@@ -1,0 +1,24 @@
+<html>
+<body>
+	<button onclick="myFunction()">Click me</button>
+	<p id="demo"></p>
+
+	<script>
+		function myFunction() {
+		
+		  document.getElementById("demo").innerHTML = "error, you should not see this after clicking the button";
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+			  document.getElementById("demo").innerHTML = "Success:"+ this.responseText;
+			}
+		  };
+		  xhttp.withCredentials = true;
+
+		  xhttp.open("GET", "https://bil-cmspublic.prometric-testing.com//xmlhttp_info.txt", true);
+		  xhttp.send();
+	  
+		}
+</script>
+</body>
+</html>
