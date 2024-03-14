@@ -1,24 +1,25 @@
 <html>
 <body>
-	<button onclick="myFunction()">Click me</button>
-	<p id="demo"></p>
+  <button onclick="myFunction()">Click me</button>
+  <p id="demo">you should not see this after clicking the button</p>
 
-	<script>
-		function myFunction() {
-		
-		  document.getElementById("demo").innerHTML = "error, you should not see this after clicking the button";
-		  var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-			  document.getElementById("demo").innerHTML = "Success:"+ this.responseText;
-			}
-		  };
-		  xhttp.withCredentials = true;
-
-		  xhttp.open("GET", "https://bil-cmspublic.prometric-testing.com//xmlhttp_info.txt", true);
-		  xhttp.send();
-	  
-		}
+  <script>
+    function myFunction() {
+      fetch('https://bil-cmspublic.prometric-testing.com/xmlhttp_info.txt', {
+        mode: "cors",
+        credentials: "include"
+      })
+      .then(blob => blob.json())
+      .then(data => {
+        document.getElementById("demo").innerHTML = data;
+        return data;
+      })
+      .catch(e => {
+        console.log(e);
+        document.getElementById("demo").innerHTML = "Error: " + e;
+        return e;
+      });
+  }
 </script>
 </body>
 </html>
